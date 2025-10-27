@@ -32,10 +32,16 @@ public class SpartieInterpreter {
         // TODO: Before negating (-), check to make sure the type is correct using the provided validateOperand method
         switch (expression.operator.type) {
             case NOT:
-                return null;
+                validateOperand(expression.operator, right);
+                if (isTrue(right)){
+                    return false;
+                }
+                else{
+                return true ;
+                }
             case SUBTRACT:
                 validateOperand(expression.operator, right);
-                return null;
+                return - (double) right;
         }
 
         return null;
@@ -95,6 +101,9 @@ public class SpartieInterpreter {
         // 1. They are both null
         // 2. Their values are the same
 
+        if (left.equals(right) || (left == null &&  right == null)){
+            return true;
+        }
         return false;
     }
 
@@ -102,8 +111,15 @@ public class SpartieInterpreter {
     private boolean isTrue(Object object) {
         // We should return false if an object is null
         // If an object is of type boolean, we should return the primitive equivalent of that value
-
+        if (object == null){
+        return false;
+        }
+        if (object instanceof Boolean){
+            return (boolean) object;
+        }
         return true;
+        // finish
+
     }
 
     // Validate the type
