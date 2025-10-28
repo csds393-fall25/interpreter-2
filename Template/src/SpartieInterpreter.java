@@ -32,7 +32,9 @@ public class SpartieInterpreter {
         // TODO: Before negating (-), check to make sure the type is correct using the provided validateOperand method
         switch (expression.operator.type) {
             case NOT:
-                validateOperand(expression.operator, right);
+                if(!(right instanceof Boolean)) {
+                    error("Invalid type on line " + expression.operator.line + " : " + expression.operator.text + right);
+                }
                 if (isTrue(right)){
                     return false;
                 }
@@ -51,14 +53,27 @@ public class SpartieInterpreter {
         Object left = interpret(expression.left);
         Object right = interpret(expression.right);
      
-
-       
-
         // TODO: Add support for String concatenation, for example: "Jane" + "Doe"
         // TODO: Add support for String concatenation with a double that is rounded, for example "Jane is " + 12
         // TODO: Handle unique case with add operator that can be applied to Strings and Doubles
         if (expression.operator.type == TokenType.ADD) {
             // TODO: Return the correct evaluation
+            if(left instanceof String strLeft) {
+                String toConcat = "";
+                if(right instanceof Double dRight) {
+                    toConcat = (Math.round(dRight * 100) / 100.0) + "";
+                } else if(right instanceof String strRight) {
+                    toConcat = strRight;
+                }
+                return strLeft + toConcat;
+            } else if (left instanceof Double dLeft) {
+                if(right instanceof Double dRight) {
+                    return dLeft + dRight;
+                } else if (right instanceof String strRight) {
+                    String toConcat = (Math.round(dLeft * 100) / 100.0) + "";
+                    return toConcat + strRight;
+                }
+            }
         }
 
         // TODO: Test if the two are equivalent or not equivalent
@@ -77,7 +92,7 @@ public class SpartieInterpreter {
         // TODO: still need to cast them to doubles. Use the primitive type, e.g. (double)left
         // TODO: we do not support >, >=, <, or <= on Strings
 
-        if (!(left instanceof double && right instanceof double)){
+        if (!(left instanceof Double && right instanceof Double)){
             return null;
         }
 
