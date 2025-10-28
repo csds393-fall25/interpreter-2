@@ -28,8 +28,6 @@ public class SpartieInterpreter {
     private Object interpretUnary(Expression.UnaryExpression expression) {
         Object right = interpret(expression.right);
 
-        // TODO: Complete interpreter. Check the unary operator type (! or -) and perform the operation
-        // TODO: Before negating (-), check to make sure the type is correct using the provided validateOperand method
         switch (expression.operator.type) {
             case NOT:
                 if(!(right instanceof Boolean)) {
@@ -53,11 +51,7 @@ public class SpartieInterpreter {
         Object left = interpret(expression.left);
         Object right = interpret(expression.right);
      
-        // TODO: Add support for String concatenation, for example: "Jane" + "Doe"
-        // TODO: Add support for String concatenation with a double that is rounded, for example "Jane is " + 12
-        // TODO: Handle unique case with add operator that can be applied to Strings and Doubles
         if (expression.operator.type == TokenType.ADD) {
-            // TODO: Return the correct evaluation
             if(left instanceof String strLeft) {
                 String toConcat = "";
                 if(right instanceof Double dRight) {
@@ -76,7 +70,6 @@ public class SpartieInterpreter {
             }
         }
 
-        // TODO: Test if the two are equivalent or not equivalent
         switch(expression.operator.type) {
             case EQUIVALENT:
                 return left.equals(right);
@@ -98,19 +91,19 @@ public class SpartieInterpreter {
 
         switch(expression.operator.type) {
             case SUBTRACT:
-                return (double) left - (double) right; 
+                return null; 
             case MULTIPLY:
-                return (double) left * (double) right;
+                return null;
             case DIVIDE:
-                return (double) left / (double) right;
+                return null;
             case GREATER_THAN:
-                return (double) left > (double) right;
+                return null;
             case GREATER_EQUAL:
-                return (double) left >= (double) right;
+                return null;
             case LESS_THAN:
-                return (double) left < (double) right;
+                return null;
             case LESS_EQUAL:
-                return (double) left <= (double) right;
+                return null;
         }
 
         return null;
@@ -124,13 +117,8 @@ public class SpartieInterpreter {
         // 1. They are both null
         // 2. Their values are the same
 
-        if (left.equals(right) || (left == null &&  right == null)){
-            return true;
-        }
-        return false;
     }
 
-    // TODO: Complete implementation of isTrue.
     private boolean isTrue(Object object) {
         // We should return false if an object is null
         // If an object is of type boolean, we should return the primitive equivalent of that value
