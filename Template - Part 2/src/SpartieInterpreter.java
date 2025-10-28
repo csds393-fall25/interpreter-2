@@ -32,10 +32,16 @@ public class SpartieInterpreter {
         // TODO: Before negating (-), check to make sure the type is correct using the provided validateOperand method
         switch (expression.operator.type) {
             case NOT:
-                return null;
+                validateOperand(expression.operator, right);
+                if (isTrue(right)){
+                    return false;
+                }
+                else{
+                return true ;
+                }
             case SUBTRACT:
                 validateOperand(expression.operator, right);
-                return null;
+                return - (double) right;
         }
 
         return null;
@@ -44,6 +50,9 @@ public class SpartieInterpreter {
     private Object interpretBinary(Expression.BinaryExpression expression) {
         Object left = interpret(expression.left);
         Object right = interpret(expression.right);
+     
+
+       
 
         // TODO: Add support for String concatenation, for example: "Jane" + "Doe"
         // TODO: Add support for String concatenation with a double that is rounded, for example "Jane is " + 12
@@ -55,9 +64,9 @@ public class SpartieInterpreter {
         // TODO: Test if the two are equivalent or not equivalent
         switch(expression.operator.type) {
             case EQUIVALENT:
-                return null;
+                return left.equals(right);
             case NOT_EQUAL:
-                return null;
+                return !left.equals(right) ;
         }
 
         // At this point, we can validate if our operands are doubles because they cannot be Strings for the other
@@ -67,21 +76,26 @@ public class SpartieInterpreter {
         // TODO: Handle binary operator for operands. Keep in mind, at this point, we know they are doubles, but you
         // TODO: still need to cast them to doubles. Use the primitive type, e.g. (double)left
         // TODO: we do not support >, >=, <, or <= on Strings
+
+        if (!(left instanceof double && right instanceof double)){
+            return null;
+        }
+
         switch(expression.operator.type) {
             case SUBTRACT:
-                return null;
+                return (double) left - (double) right; 
             case MULTIPLY:
-                return null;
+                return (double) left * (double) right;
             case DIVIDE:
-                return null;
+                return (double) left / (double) right;
             case GREATER_THAN:
-                return null;
+                return (double) left > (double) right;
             case GREATER_EQUAL:
-                return null;
+                return (double) left >= (double) right;
             case LESS_THAN:
-                return null;
+                return (double) left < (double) right;
             case LESS_EQUAL:
-                return null;
+                return (double) left <= (double) right;
         }
 
         return null;
@@ -95,6 +109,9 @@ public class SpartieInterpreter {
         // 1. They are both null
         // 2. Their values are the same
 
+        if (left.equals(right) || (left == null &&  right == null)){
+            return true;
+        }
         return false;
     }
 
@@ -102,8 +119,15 @@ public class SpartieInterpreter {
     private boolean isTrue(Object object) {
         // We should return false if an object is null
         // If an object is of type boolean, we should return the primitive equivalent of that value
-
+        if (object == null){
+        return false;
+        }
+        if (object instanceof Boolean){
+            return (boolean) object;
+        }
         return true;
+        // finish
+
     }
 
     // Validate the type
