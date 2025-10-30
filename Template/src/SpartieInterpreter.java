@@ -81,10 +81,6 @@ public class SpartieInterpreter {
         // operation
         validateOperands(expression.operator, left, right);
 
-        // TODO: Handle binary operator for operands. Keep in mind, at this point, we know they are doubles, but you
-        // TODO: still need to cast them to doubles. Use the primitive type, e.g. (double)left
-        // TODO: we do not support >, >=, <, or <= on Strings
-
         if (!(left instanceof Double && right instanceof Double)){
             return null;
         }
@@ -113,8 +109,6 @@ public class SpartieInterpreter {
     }
 
     // Helper Methods
-
-    // TODO: Complete implementation of testing for equivalency
     private boolean isEquivalent(Object left, Object right) {
         // They are equal under the following conditions:
         // 1. They are both null
