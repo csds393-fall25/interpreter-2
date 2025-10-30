@@ -1,3 +1,6 @@
+/*
+Members: Thao Nguyen (ttn60), Mollie Ackerman (msa180), Shannon Griswold (svg33)
+*/
 abstract class Expression {
     static class BinaryExpression extends Expression {
         public Expression left;

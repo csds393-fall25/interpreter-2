@@ -1,3 +1,6 @@
+/*
+Members: Thao Nguyen (ttn60), Mollie Ackerman (msa180), Shannon Griswold (svg33)
+*/
 public class Token {
     public final TokenType type;
     public final String text;

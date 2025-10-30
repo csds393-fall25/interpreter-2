@@ -1,3 +1,6 @@
+/*
+Members: Thao Nguyen (ttn60), Mollie Ackerman (msa180), Shannon Griswold (svg33)
+*/
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
