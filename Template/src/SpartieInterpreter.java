@@ -33,11 +33,11 @@ public class SpartieInterpreter {
                 if(!(right instanceof Boolean)) {
                     error("Invalid type on line " + expression.operator.line + " : " + expression.operator.text + right);
                 }
-                if (isTrue(right)){
+                if (isTrue(right)) {
                     return false;
                 }
-                else{
-                return true ;
+                else {
+                    return true;
                 }
             case SUBTRACT:
                 validateOperand(expression.operator, right);
@@ -72,9 +72,9 @@ public class SpartieInterpreter {
 
         switch(expression.operator.type) {
             case EQUIVALENT:
-                return left.equals(right);
+                return isEquivalent(left, right);
             case NOT_EQUAL:
-                return !left.equals(right) ;
+                return !isEquivalent(left, right);
         }
 
         // At this point, we can validate if our operands are doubles because they cannot be Strings for the other
@@ -91,19 +91,22 @@ public class SpartieInterpreter {
 
         switch(expression.operator.type) {
             case SUBTRACT:
-                return null; 
+                return (double) left - (double) right;
             case MULTIPLY:
-                return null;
+                return (double) left * (double) right;
             case DIVIDE:
-                return null;
+                if ((double) right == 0) {
+                    error("Division by zero on line " + expression.operator.line);
+                }
+                return (double) left / (double) right;
             case GREATER_THAN:
-                return null;
+                return (double) left > (double) right;
             case GREATER_EQUAL:
-                return null;
+                return (double) left >= (double) right;
             case LESS_THAN:
-                return null;
+                return (double) left < (double) right;
             case LESS_EQUAL:
-                return null;
+                return (double) left <= (double) right;
         }
 
         return null;
@@ -116,7 +119,10 @@ public class SpartieInterpreter {
         // They are equal under the following conditions:
         // 1. They are both null
         // 2. Their values are the same
-
+        if ((left == null && right == null) || left.equals(right)) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isTrue(Object object) {
