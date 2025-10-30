@@ -33,11 +33,11 @@ public class SpartieInterpreter {
                 if(!(right instanceof Boolean)) {
                     error("Invalid type on line " + expression.operator.line + " : " + expression.operator.text + right);
                 }
-                if (isTrue(right)){
+                if (isTrue(right)) {
                     return false;
                 }
-                else{
-                return true ;
+                else {
+                    return true;
                 }
             case SUBTRACT:
                 validateOperand(expression.operator, right);
@@ -72,9 +72,9 @@ public class SpartieInterpreter {
 
         switch(expression.operator.type) {
             case EQUIVALENT:
-                return left.equals(right);
+                return isEquivalent(left, right);
             case NOT_EQUAL:
-                return !left.equals(right) ;
+                return !isEquivalent(left, right);
         }
 
         // At this point, we can validate if our operands are doubles because they cannot be Strings for the other
@@ -119,13 +119,8 @@ public class SpartieInterpreter {
         // They are equal under the following conditions:
         // 1. They are both null
         // 2. Their values are the same
-        if (left == null && right == null) {
+        if ((left == null && right == null) || left.equals(right)) {
             return true;
-        }
-        if (left.getClass() == Expression.LiteralExpression.class && right.getClass() == Expression.LiteralExpression.class) {
-            if (((Expression.LiteralExpression) left).literalValue.equals(((Expression.LiteralExpression) right).literalValue)) {
-                return true;
-            }
         }
         return false;
     }
