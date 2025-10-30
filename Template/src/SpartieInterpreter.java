@@ -91,19 +91,22 @@ public class SpartieInterpreter {
 
         switch(expression.operator.type) {
             case SUBTRACT:
-                return null; 
+                return (double) left - (double) right;
             case MULTIPLY:
-                return null;
+                return (double) left * (double) right;
             case DIVIDE:
-                return null;
+                if ((double) right == 0) {
+                    error("Division by zero on line " + expression.operator.line);
+                }
+                return (double) left / (double) right;
             case GREATER_THAN:
-                return null;
+                return (double) left > (double) right;
             case GREATER_EQUAL:
-                return null;
+                return (double) left >= (double) right;
             case LESS_THAN:
-                return null;
+                return (double) left < (double) right;
             case LESS_EQUAL:
-                return null;
+                return (double) left <= (double) right;
         }
 
         return null;
@@ -116,7 +119,15 @@ public class SpartieInterpreter {
         // They are equal under the following conditions:
         // 1. They are both null
         // 2. Their values are the same
-
+        if (left == null && right == null) {
+            return true;
+        }
+        if (left.getClass() == Expression.LiteralExpression.class && right.getClass() == Expression.LiteralExpression.class) {
+            if (((Expression.LiteralExpression) left).literalValue.equals(((Expression.LiteralExpression) right).literalValue)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isTrue(Object object) {
